@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Growing Ninja — First Steps — HTML5 export",
   "scripts": {
-    "start": "serve build -l tcp://0.0.0.0:${PORT:-3000} -c serve.json"
+    "start": "serve build -l tcp://0.0.0.0:${PORT:-3000} -c ../serve.json"
   },
   "dependencies": {
     "serve": "^14.2.4"
