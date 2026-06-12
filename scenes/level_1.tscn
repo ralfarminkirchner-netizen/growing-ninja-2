@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_1.gd" id="1_script"]
+[ext_resource type="TileSet" path="res://assets/tileset.tres" id="2_tileset"]
+[ext_resource type="Texture2D" path="res://assets/sprites/bg_far.png" id="3_bgfar"]
+[ext_resource type="Texture2D" path="res://assets/sprites/bg_near.png" id="4_bgnear"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="5_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui_hud.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="7_pause"]
+[ext_resource type="AudioStream" path="res://assets/audio/music_loop.wav" id="8_music"]
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="FarLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.15, 0.1)
+motion_mirroring = Vector2(640, 360)
+
+[node name="FarStars" type="Sprite2D" parent="ParallaxBackground/FarLayer"]
+texture = ExtResource("3_bgfar")
+centered = false
+
+[node name="NearLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.4, 0.2)
+motion_mirroring = Vector2(640, 0)
+
+[node name="NearDeco" type="Sprite2D" parent="ParallaxBackground/NearLayer"]
+position = Vector2(0, -60)
+texture = ExtResource("4_bgnear")
+centered = false
+
+[node name="Fireflies" type="CPUParticles2D" parent="."]
+position = Vector2(1344, 300)
+amount = 40
+lifetime = 8.0
+preprocess = 7.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 16.0
+scale_amount_min = 1.0
+scale_amount_max = 2.0
+color = Color(0.92, 1, 0.6, 0.55)
+emission_shape = 3
+emission_rect_extents = Vector2(1400, 220)
+
+[node name="Ground" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_tileset")
+
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("5_player")]
+position = Vector2(80, 384)
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_pause")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_music")
+volume_db = -10.0
+autoplay = true

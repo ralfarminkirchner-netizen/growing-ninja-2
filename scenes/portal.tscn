@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/portal.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/portal.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="shape_portal"]
+size = Vector2(36, 56)
+
+[sub_resource type="Animation" id="anim_glow"]
+resource_name = "glow"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.85), Color(1.15, 1.15, 1.25, 1), Color(1, 1, 1, 0.85)]
+}
+
+[sub_resource type="AnimationLibrary" id="anim_lib"]
+_data = {
+"glow": SubResource("anim_glow")
+}
+
+[node name="Portal" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("shape_portal")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("anim_lib")
+}
+autoplay = "glow"
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -30)
+amount = 16
+lifetime = 1.4
+spread = 180.0
+gravity = Vector2(0, -25)
+initial_velocity_min = 8.0
+initial_velocity_max = 20.0
+scale_amount_min = 1.0
+scale_amount_max = 2.5
+color = Color(0.75, 0.92, 1, 0.8)
+emission_shape = 3
+emission_rect_extents = Vector2(18, 28)
